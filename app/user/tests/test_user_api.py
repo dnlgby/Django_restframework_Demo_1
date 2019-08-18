@@ -10,8 +10,10 @@ CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
 
+
 def create_user(**params):
     return get_user_model().objects.create_user(**params)
+
 
 # For someone that is not authenticated
 class PublicUserApiTests(TestCase):
@@ -73,8 +75,9 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_invalid_credentials(self):
         """Test that token is not created if invalid credentials are given"""
+
         create_user(email="dnlgby@gmail.com", password="testpass")
-        payload = {'email': 'dnlgby@gmail.com', 'password':'wrongpass'}
+        payload = {'email': 'dnlgby@gmail.com', 'password': 'wrongpass'}
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertNotIn('token', res.data)
@@ -85,7 +88,7 @@ class PublicUserApiTests(TestCase):
         payload = {'email': "bla@gmail.com", 'password': "passa"}
         res = self.client.post(TOKEN_URL, payload)
 
-        self.assertNotIn('token', res.data);
+        self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_token_missing_field(self):
@@ -108,13 +111,13 @@ class PrivateUserApiTests(TestCase):
 
     def setUp(self):
         self.user = create_user(
-            email = "dnlgby@gmail.com",
-            password ="password",
-            name = "daniel"
+            email="dnlgby@gmail.com",
+            password="password",
+            name="daniel"
         )
 
         self.client = APIClient()
-        self.client.force_authenticate(user = self.user)
+        self.client.force_authenticate(user=self.user)
 
     def test_retrieve_profile_success(self):
         """Test retrieving profile for logged in user"""
@@ -134,8 +137,8 @@ class PrivateUserApiTests(TestCase):
 
     def test_update_user_profile(self):
         """Test updating the use profile for authenticated user"""
-        payload = {'name':'new_name', 'password':'new_password'}
 
+        payload = {'name': 'new_name', 'password': 'new_password'}
         res = self.client.patch(ME_URL, payload)
 
         # Update the user with the latest db values.
