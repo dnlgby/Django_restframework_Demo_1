@@ -58,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Tag(models.Model):
     """Tag to be used for the recipe"""
     name = models.CharField(max_length=255)
-    # If you delete this user then delete these tags as well (CASCADE).
+    # If you delete this user then delete the tag as well (CASCADE).
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -71,6 +71,7 @@ class Tag(models.Model):
 class Ingredient(models.Model):
     """Ingredient to be used in a recipe"""
     name = models.CharField(max_length=255)
+    # If you delete this user then delete the ingredient as well (CASCADE).
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
