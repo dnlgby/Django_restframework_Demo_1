@@ -4,9 +4,10 @@ services:
    app:
     build:
       context: .
-    ports:
+    ports: # Map port from our local machine into the docker container image port (Machine:DockerImage )
       - "8000:8000"
-    volumes:
+    volumes: # Map volume - every change that we will do here will be automatically mapped straight into the docker container image.
+             # We can do a real time changes that will automatically will be in the docker image as well without rebuild that.
       - ./app:/app
     command: >
       sh -c "python manage.py wait_for_db &&
@@ -17,7 +18,7 @@ services:
       - DB_NAME=app
       - DB_USER=postgres
       - DB_PASS=supersecretpassword
-    depends_on:
+    depends_on: # app service is depends on db service - db should start first & app service should be able to access the db service.
       - db
    db:
      image: postgres:10-alpine

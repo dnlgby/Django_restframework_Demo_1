@@ -1,6 +1,8 @@
 FROM python:3.7-alpine
 MAINTAINER dnlgby.
 
+# Do not buffer any output (to stdin or stdout)
+# just output everything to the terminal.
 ENV PYTHONUNBUFFERED 1
 
 # Install dependencies
@@ -14,6 +16,8 @@ RUN apk del .tmp-build-deps
 # Setup directory structure
 RUN mkdir /app
 WORKDIR /app
+
+# Copy files from our local machine into the container.
 COPY ./app/ /app
 
 RUN mkdir -p /vol/web/media
