@@ -1,2 +1,8 @@
-# recipe-app-api
-Recipe app api source code.
+# Recipe API - Django restframework
+  Demonstrates the following:
+  * Views, Models & Serializers.
+  * Unit tests.
+  * Pictures uploading.
+  * Using Docker.
+  * Using postgres DB.
+
